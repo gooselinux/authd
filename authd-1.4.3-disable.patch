@@ -1,0 +1,17 @@
+--- authd-1.4.3/xinetd.conf.auth.old	2004-07-10 05:17:24.000000000 +0200
++++ authd-1.4.3/xinetd.conf.auth	2005-04-07 13:00:50.000000000 +0200
+@@ -1,4 +1,4 @@
+-# default: on
++# default: off
+ # description: The authd server handles ident protocol requests. \
+ # The Identification Protocol (a.k.a., "ident", a.k.a., "the Ident \
+ # Protocol") provides a means to determine the identity of a user of a \
+@@ -8,7 +8,7 @@
+ # SPAM HARVESTERS) BEFORE RUNNING THIS DAEMON WITH NO ARGUMENTS.
+ service auth
+ {
+-        disable = no
++        disable         = yes
+         socket_type     = stream
+         wait            = no
+         user            = ident

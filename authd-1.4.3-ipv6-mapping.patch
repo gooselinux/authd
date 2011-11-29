@@ -1,0 +1,24 @@
+--- authd-1.4.3/authd.c.old	2005-06-24 16:08:04.000000000 +0200
++++ authd-1.4.3/authd.c	2005-06-24 16:12:06.000000000 +0200
+@@ -485,8 +485,19 @@
+ 
+                 assert(opt.mapped != NULL);
+                 strcpy(peer_128, opt.mapped); strcpy(host_128, opt.mapped);
+-                strncpy(host_128, addr_hex, z);
+-                strncpy(peer_128, peer_addr_hex, strlen(peer_addr_hex));
++
++                /*
++                   If mapping IPV4 to IPV6 space is enabled,
++                   take only last 4 numbers of IPV6
++                */
++                if(opt.mapped[0]) {
++                  strncpy(host_128, addr_hex+z-8, 8);
++                  strncpy(peer_128, peer_addr_hex, 8);
++                } else {
++                  strncpy(host_128, addr_hex, z);
++                  strncpy(peer_128, peer_addr_hex, strlen(peer_addr_hex));
++                }
++
+                 if (strcmp(peer_128, host_128) != 0) return addr;
+             }
+             // hex addr must have even number of digits

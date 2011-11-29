@@ -1,0 +1,22 @@
+diff -up authd-1.4.3/authd.c.valist authd-1.4.3/authd.c
+--- authd-1.4.3/authd.c.valist	2008-05-21 14:55:30.000000000 +0200
++++ authd-1.4.3/authd.c	2008-05-21 14:56:34.000000000 +0200
+@@ -80,13 +80,16 @@ static void log_printf(int level, const 
+     if (opt.debug || level != LOG_DEBUG) {
+         va_list ap;
+ 
+-        va_start(ap, s);
+         if (s == NULL || *s == '\0') {
+             s = strerror(errno);
+             assert(strchr(s, '%') == NULL);
+         }
+-        if (opt.log)
++        if (opt.log) {
++            va_start(ap, s);
+             vsyslog(level, s, ap);
++            va_end(ap);
++        }
++        va_start(ap, s);
+         if (vfprintf(level == LOG_INFO ? stdout : stderr, s, ap) < 0) {
+             perror(program_invocation_name);
+             level = INT_MIN;

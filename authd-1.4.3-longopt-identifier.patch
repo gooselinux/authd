@@ -1,0 +1,11 @@
+--- authd-1.4.3/authd.c.old	2007-09-19 11:39:25.000000000 +0200
++++ authd-1.4.3/authd.c	2007-09-19 11:40:02.000000000 +0200
+@@ -203,7 +203,7 @@ static char *created_pton_hex(const char
+ }
+ 
+ static void create_opt(int argc, char *argv[]) {
+-    enum { $_LONGOPT = UCHAR_MAX,       // no short opt value overlap
++    enum { PRE_FIRST_LONGOPT = UCHAR_MAX,       // no short opt value overlap
+         CODESET_LONGOPT, IDENT_LONGOPT, FN_LONGOPT, LANG_LONGOPT,
+         MAPPED_LONGOPT, OS_LONGOPT, PASSWD_LONGOPT, USERNAME_LONGOPT
+     };

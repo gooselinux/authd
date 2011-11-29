@@ -1,0 +1,11 @@
+--- authd-1.4.3/authd.c~	2006-07-21 22:32:26.000000000 +0930
++++ authd-1.4.3/authd.c	2006-07-22 00:32:11.000000000 +0930
+@@ -979,6 +979,8 @@
+     mtrace();
+ #   endif
+     if (setlocale(LC_ALL, "") == NULL) abort();
++    errno = 0;			/* not an error for some locale files to
++				   be missing */
+     if (signal(SIGALRM, catch_signal) == SIG_ERR) abort();
+     if (textdomain(PACKAGE) == NULL) handle_error(NULL);
+     if (bindtextdomain(PACKAGE, NULL) == NULL) handle_error(NULL);

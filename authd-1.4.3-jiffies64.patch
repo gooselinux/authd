@@ -1,0 +1,35 @@
+diff -up authd-1.4.3/authd.c.jiffies64 authd-1.4.3/authd.c
+--- authd-1.4.3/authd.c.jiffies64	2004-11-16 00:25:24.000000000 +0100
++++ authd-1.4.3/authd.c	2008-03-25 11:22:35.000000000 +0100
+@@ -347,6 +347,22 @@ static void create_opt(int argc, char *a
+ 
+ static const char *const DELIM = ",: \t\r\n\v\f";
+ 
++static unsigned long long get_tok_ullong(char *s, unsigned base) {
++    unsigned long long ull = ULLONG_MAX;
++
++    assert(base <= 36);
++    if ((s = strtok(s, DELIM)) != NULL) {
++        char *endptr;
++
++        ull = strtoull(s, &endptr, (int) base);
++        if ((errno == ERANGE && ull == ULLONG_MAX) || is_bad_strto(s, endptr))
++            errno = EINVAL;
++    }
++    else errno = EINVAL;
++    return ull;
++}
++
++
+ static unsigned long get_tok_uint(char *s, unsigned base) {
+     unsigned long ul = ULONG_MAX;
+ 
+@@ -643,7 +659,7 @@ static bool get_info(reply_t *out, reque
+         (void) get_tok_uint(NULL, 16);            // tx_queue
+         (void) get_tok_uint(NULL, 16);            // rx_queue
+         (void) get_tok_uint(NULL, 16);            // tr (boolean)
+-        (void) get_tok_uint(NULL, 16);            // tm->when (unit: jiffies)
++        (void) get_tok_ullong(NULL, 16);            // tm->when (unit: jiffies)
+         strtok(NULL, DELIM);                      // retrnsmt
+         uid = get_tok_uint(NULL, 10);             // uid (base 10 uint)
+         strtok(NULL, DELIM);                      // timeout

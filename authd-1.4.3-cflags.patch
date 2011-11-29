@@ -1,0 +1,12 @@
+diff -up authd-1.4.3/GNUmakefile.cflags authd-1.4.3/GNUmakefile
+--- authd-1.4.3/GNUmakefile.cflags	2010-02-24 12:29:59.000000000 +0100
++++ authd-1.4.3/GNUmakefile	2010-02-24 12:30:26.000000000 +0100
+@@ -9,7 +9,7 @@ URL=$(shell gcc -E -dM config.h|awk '$$2
+ 
+ PROJECT_ID := $(PACKAGE)-$(VERSION)
+ 
+-CFLAGS=-std=gnu99 -Wall -W -DNDEBUG -g -O
++CFLAGS+=-std=gnu99 -Wall -W -DNDEBUG -g -O
+ #CFLAGS=-std=gnu99 -Wall -W -g -O0
+ LDFLAGS=-lcrypto
+ 

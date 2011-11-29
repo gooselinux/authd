@@ -1,0 +1,29 @@
+--- authd-1.4.3/authd.c.old	2004-11-16 00:25:24.000000000 +0100
++++ authd-1.4.3/authd.c	2005-03-07 14:48:08.000000000 +0100
+@@ -579,7 +579,7 @@
+     char *laddr = NULL, *raddr = NULL;
+     bool is_port_pair_found = false;
+ 
+-    static char *created_verbose(const char *name, unsigned long id) {
++    char *created_verbose(const char *name, unsigned long id) {
+         size_t n; time_t tod;
+         char *s, when[USERID_MAX_LEN], *host1, *port1, *host2, *port2;
+         const char *const UTC_FMT = "%FT%TZ", *const TZ_FMT = "(%a %EX %z/%Z)";
+
+New for GCC 4.3:
+--- authd-1.4.3/authd.old	2008-02-12 10:57:06.000000000 +0100
++++ authd-1.4.3/authd.c	2008-02-12 10:57:54.000000000 +0100
+@@ -195,11 +195,11 @@
+ }
+ 
+ static char *created_pton_hex(const char *prefix) {
+-    struct in6_addr addr; const size_t SIZE = sizeof(addr.in6_u.u6_addr8);
++    struct in6_addr addr; const size_t SIZE = sizeof(addr.s6_addr);
+ 
+     assert(prefix != NULL);
+     if (inet_pton(AF_INET6, prefix, &addr) <= 0) return NULL;
+-    return created_addr_hex((const void *) addr.in6_u.u6_addr8, SIZE);
++    return created_addr_hex((const void *) addr.s6_addr, SIZE);
+ }
+ 
+ static void create_opt(int argc, char *argv[]) {
